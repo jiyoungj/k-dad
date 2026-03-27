@@ -657,6 +657,26 @@ tr:nth-child(even) td {
   margin-right: 10px;
 }
 
+.numbered-list {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 14px 18px;
+  counter-reset: list-counter;
+}
+
+.numbered-list li {
+  padding: 3px 0;
+  font-size: 14.5px;
+  color: var(--text);
+  counter-increment: list-counter;
+}
+
+.numbered-list li::before {
+  content: counter(list-counter) ")";
+  color: var(--navy);
+  margin-right: 10px;
+}
+
 /* === Animation Keyframes === */
 @keyframes fadeIn {
   from {

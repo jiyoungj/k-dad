@@ -115,13 +115,56 @@
       </p>
 
         <h3 id="s5-1">5.1. Labeling conventions</h3>
-        <p>To be added.</p>
+        <p>All files follow the naming convention:
+          [TaskType]_[Label]_[Sentence]_[Rate]_[Dialect][Age][Sex][ID]_[Repetition] 
+          <br>
+          The fields are defined as follows:
+        </p>
+
+          <ul class="bullet-list" style="padding-left: 34px;">
+            <li>TaskType: PA (Text Passage) or SY (Isolated Syllables)</li>
+            <li>Label: the passage identifier (A–G) for passage recordings, or the syllable set identifier for syllable recordings</li>
+            <li>Sentence: the specific sentence within a passage, or the specific syllable within a set</li>
+            <li>Rate: F (Fast), N (Normal), or S (Slow)</li>
+            <li>Dialect: dialect region code, e.g. SEK (Seoul), NKK (North Gyeongsang), SJK (South Jeonnam), etc.</li>
+            <li>Age: speaker's age group (20–60)</li>
+            <li>Sex: M (Male) or F (Female)</li>
+            <li>ID: speaker number within the group (01–30)</li>
+            <li>Repetition: R01 (first repetition) or R02 (second repetition)</li>
+          </ul>
+          
+          <p style="padding-left: 34px;">
+          Each recording consists of three files sharing the same base filename:  
+          </p>
+
+          <ul class="bullet-list" style="padding-left: 34px;">
+            <li>wav audio file, </li>
+            <li>mat articulatory data file (MATLAB format), and </li>
+            <li>TextGrid text annotation file.</li>
+          </ul>
+
+          <p style="padding-left: 34px;">
+          TextGrids contain three interval tiers:  
+          </p>
+
+          <ol class="numbered-list" style="padding-left: 34px;">
+            <li>발화 — sentence-level segmentation in Hangul orthography;</li>
+            <li>Utterance — the same sentences in Google Korean Romanization; and </li>
+            <li>단어 / Word — word-level segmentation with each label giving the Hangul form and its romanization separated by a forward slash (e.g., 북풍과/bugpunggwa).</li>
+          </ol>
 
         <h3 id="s5-2">5.2. Data processing details</h3>
-        <p>To be added.</p>
+        <p>Articulatory data were recorded using the Carstens AG501 Electromagnetic Articulography (EMA) system. Sensors were attached to the following articulators: tongue tip, tongue body, tongue dorsum, upper lip, lower lip, and lower gum. Additionally, sensors were placed on the nasion and upper gum as fixed reference points for head movement correction.</p>
+        
+        <p style="padding-left: 34px;">Recordings were made as continuous sweeps of complete text passages and complete syllable sets. Each sweep was subsequently segmented into individual files at the sentence level for passage recordings and at the individual syllable level for syllable recordings. Following segmentation, TextGrid annotation files were created for each recording through hand-labeling in Praat, providing sentence-level transcriptions in both Hangul and Google Korean Romanization, as well as word-level segmentation.</p>
+        
+        <p style="padding-left: 34px;">Raw sensor position data were processed in MView. Head movement correction was performed using the nasion and upper incisor/gum reference sensors to remove the effects of head movement during recording. Following head correction, sensor coordinates were rotated into the occlusal plane via bite plane correction, which was recorded from each speaker prior to the main recording session. The .mat files distributed with the database contain the fully head-corrected and bite-plane-corrected sensor trajectories.</p>
+        
+        <p style="padding-left: 34px;">Acoustic and articulatory signals were recorded simultaneously on a single system.</p>
 
-        <h3 id="s5-3">5.3. Sampling rate and bit depth</h3>
-        <p>To be added.</p>
+        <h3 id="s5-3">5.3. Sampling rate</h3>
+        <p>Acoustic recordings are sampled at 48,000 Hz at 16-bit depth and stored in WAV format.<br>
+          Articulatory data are sampled at 1,250 Hz and stored in MATLAB (.mat) format.</p>
 
       <h2 id="s6" class="animate-on-scroll slide-in-left">6. Access and availability</h2>
 
