@@ -25,6 +25,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 74px;
 }
 
 html, body {
@@ -476,8 +477,8 @@ tr:nth-child(even) td {
 /* === Login Card === */
 .login-wrapper {
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   padding-top: 8px;
 }
 
@@ -770,8 +771,26 @@ tr:nth-child(even) td {
   background-color: #555;
 }
 
-html {
-  scroll-behavior: smooth;
+/* === Hamburger === */
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  color: white;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  transition: background 0.15s;
+}
+
+.hamburger:hover {
+  background: rgba(255,255,255,0.12);
+}
+
+.hamburger svg {
+  display: block;
 }
 
 /* === Responsive === */
@@ -828,9 +847,31 @@ html {
 }
 
 @media (max-width: 600px) {
-  .nav-links { display: none; }
+  .hamburger { display: flex; }
 
-  .logo { font-size: 14px; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 58px;
+    left: 0;
+    right: 0;
+    background: var(--navy-dark);
+    flex-direction: column;
+    gap: 2px;
+    padding: 8px 12px 14px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+    z-index: 99;
+  }
+
+  .nav-links.open { display: flex; }
+
+  .nav-links li { width: 100%; }
+
+  .nav-links a { font-size: 14.5px; padding: 10px 12px; }
+
+  .navbar { position: sticky; }
+
+  .logo { font-size: 15px; font-weight: 700; }
 
   .login-card { padding: 28px 20px; }
 }
