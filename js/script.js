@@ -57,6 +57,23 @@ document.addEventListener('DOMContentLoaded', () => {
     updateActive();
   }
 
+  /* ── Hamburger menu ── */
+  const hamburger = document.querySelector('.hamburger');
+  const navLinks = document.querySelector('.nav-links');
+
+  if (hamburger && navLinks) {
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+    });
+
+    // Close menu when a nav link is clicked
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+      });
+    });
+  }
+
   /* ── Copy citation ── */
   const copyBtn = document.getElementById('copy-citation');
   if (copyBtn) {
