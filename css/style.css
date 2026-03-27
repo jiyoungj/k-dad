@@ -386,6 +386,7 @@ tr:nth-child(even) td {
 
 .btn:active {
   transform: translateY(0);
+  color: white;
   box-shadow: none;
 }
 
