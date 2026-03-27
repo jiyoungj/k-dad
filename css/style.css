@@ -234,6 +234,10 @@ body {
   border-bottom-color: var(--accent);
 }
 
+.content a.btn {
+  color: white;
+}
+
 /* === Headings === */
 h1 {
   font-size: 27px;
@@ -386,7 +390,6 @@ tr:nth-child(even) td {
 
 .btn:active {
   transform: translateY(0);
-  color: white;
   box-shadow: none;
 }
 
