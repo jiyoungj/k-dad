@@ -109,19 +109,165 @@
         본 섹션에서는 데이터셋에 포함된 화자들의 정보(연령대, 성별 분포, 언어 배경 등)를 제공합니다.
       </p>
 
+      <table id="speaker-table" style="text-align: center;">
+        <thead>
+          <tr>
+            <th rowspan="2"></th>
+            <th colspan="2">서울</th>
+            <th colspan="2">경상(남,북)</th>
+            <th colspan="2">전남</th>
+            <th colspan="2">충남</th>
+            <th colspan="2">강원</th>
+            <th colspan="2">그 외</th>
+          </tr>
+          <tr>
+            <th>남</th><th>여</th>
+            <th>남</th><th>여</th>
+            <th>남</th><th>여</th>
+            <th>남</th><th>여</th>
+            <th>남</th><th>여</th>
+            <th>남</th><th>여</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>20대</td>
+            <td>22</td><td>23</td>
+            <td>28</td><td>35</td>
+            <td>18</td><td>21</td>
+            <td>5</td><td>4</td>
+            <td>1</td><td>4</td>
+            <td>2</td><td>1</td>
+          </tr>
+          <tr>
+            <td>30대</td>
+            <td>8</td><td>5</td>
+            <td>-</td><td>-</td>
+            <td>-</td><td>-</td>
+            <td>-</td><td>-</td>
+            <td>-</td><td>-</td>
+            <td>-</td><td>-</td>
+          </tr>
+          <tr>
+            <td>40대</td>
+            <td>-</td><td>6</td>
+            <td>-</td><td>-</td>
+            <td>-</td><td>-</td>
+            <td>-</td><td>-</td>
+            <td>-</td><td>1</td>
+            <td>-</td><td>1</td>
+          </tr>
+          <tr>
+            <td>50대</td>
+            <td>1</td><td>16</td>
+            <td>3</td><td>10</td>
+            <td>-</td><td>2</td>
+            <td>-</td><td>-</td>
+            <td>-</td><td>4</td>
+            <td>1</td><td>-</td>
+          </tr>
+          <tr>
+            <td>60대</td>
+            <td>-</td><td>1</td>
+            <td>-</td><td>2</td>
+            <td>-</td><td>-</td>
+            <td>-</td><td>-</td>
+            <td>-</td><td>-</td>
+            <td>-</td><td>-</td>
+          </tr>
+          <tr id="total-row" style="text-align: center;">
+            <td><strong>합계</strong></td>
+          </tr>
+          <tr id="caption-row">
+            <td colspan="13" style="text-align: center;" id="grand-total-caption"></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <script>
+        (function() {
+          const table = document.getElementById('speaker-table');
+          const dataRows = table.querySelectorAll('tbody tr:not(#total-row):not(#caption-row)');
+          const numCols = 6;
+          const colTotals = Array(numCols).fill(0);
+
+          dataRows.forEach(row => {
+            const cells = row.querySelectorAll('td');
+            for (let i = 0; i < numCols; i++) {
+              const m = parseInt(cells[i * 2 + 1].textContent.trim()) || 0;
+              const f = parseInt(cells[i * 2 + 2].textContent.trim()) || 0;
+              colTotals[i] += m + f;
+            }
+          });
+
+          const totalRow = document.getElementById('total-row');
+          colTotals.forEach(sum => {
+            const td = document.createElement('td');
+            td.setAttribute('colspan', '2');
+            td.innerHTML = `<strong>${sum}</strong>`;
+            totalRow.appendChild(td);
+          });
+
+          const grandTotal = colTotals.reduce((a, b) => a + b, 0);
+          document.getElementById('grand-total-caption').textContent =
+            `DB 수집 현황 = ${grandTotal}명`;
+        })();
+      </script>
+
       <h2 id="s5" class="animate-on-scroll slide-in-left">5. 기술 사양</h2>
       <p>
         본 섹션에서는 데이터베이스에서 녹음 파일 및 주석 파일이 어떻게 구성되고 명명되는지, 데이터 처리 과정, 샘플링 레이트 등 기술적 사양을 설명합니다.
       </p>
 
         <h3 id="s5-1">5.1. 라벨링 규칙</h3>
-        <p>추후 업데이트 예정.</p>
+        <p>모든 파일은 다음과 같은 명명 규칙을 따릅니다:
+          [TaskType]_[Label]_[Sentence]_[Rate]_[Dialect][Age][Sex][ID]_[Repetition] 
+          <br>
+          각 항목의 의미는 다음과 같습니다:
+        </p>
 
-        <h3 id="s5-2">5.2. 데이터 후처리 과정</h3>
-        <p>추후 업데이트 예정.</p>
+          <ul class="bullet-list" style="padding-left: 34px;">
+            <li>TaskType: PA(텍스트 문단) 또는 SY(음절)</li>
+            <li>Label: 문단 녹음의 경우 문단 식별자(A–G), 음절 녹음의 경우 음절 세트 식별자</li>
+            <li>Sentence: 문단 내 개별 문장 또는 세트 내 개별 음절입니다.</li>
+            <li>Rate: F(빠르게), N(보통), S(느리게)</li>
+            <li>Dialect: 방언 지역 코드(예: SEK (서울), NKK (경북), SJK (전남) 등)</li>
+            <li>Age: 화자의 연령대(20–60)</li>
+            <li>Sex: M(남성) 또는 F(여성)</li>
+            <li>ID: 그룹 내 화자 번호(01–30)</li>
+            <li>Repetition: R01 (첫 번째 반복) 또는 R02 (두 번째 반복)</li>
+          </ul>
+          
+          <p style="padding-left: 34px;">
+          각 녹음은 동일한 기본 파일명을 공유하는 세 개의 파일로 구성됩니다:  
+          </p>
+
+          <ul class="bullet-list" style="padding-left: 34px;">
+            <li>wav 오디오 파일, </li>
+            <li>mat 조음 데이터 파일(MATLAB 형식), </li>
+            <li>TextGrid 텍스트 주석 파일</li>
+          </ul>
+
+          <p style="padding-left: 34px;">
+          TextGrid 파일은 다음의 세 개 구간 티어(interval tier)를 포함합니다:  
+          </p>
+
+          <ol class="numbered-list" style="padding-left: 34px;">
+            <li>발화 — 한글 표기 기반의 문장 단위 구분;</li>
+            <li>Utterance — 동일 문장을 Google 한국어 로마자 표기법으로 표기</li>
+            <li>단어 / Word — 단어 단위 구분이며, 각 라벨에는 한글 표기와 로마자 표기가 슬래시로 구분되어 함께 제시 (예: 북풍과/bugpunggwa)</li>
+          </ol>
+
+        <h3 id="s5-2">5.2. 데이터 후처리 과정</h3>        
+        <p>녹음은 전체 문단 및 전체 음절 세트를 연속적으로 기록합니다. 이후 각 녹음은 문단 자료의 경우 문장 단위로, 음절 자료의 경우 개별 음절 단위로 분할합니다. 분할 이후에는 Praat에서 수동 라벨링을 통해 각 녹음에 대한 TextGrid 주석 파일을 생성하며, 한글 및 Google 한국어 로마자 표기 문장 전사와 단어 단위 구분 정보를 제공합니다.</p>
+        
+        <p style="padding-left: 34px;">센서 위치 데이터는 Haskins Laboratories의 Mark Tiede가 개발한 스크립트를 사용하여 MATLAB에서 처리합니다. 머리 움직임 보정은 비근부 센서와 윗잇몸 기준 센서를 사용하여 녹음 중 발생한 머리 움직임의 영향을 제거하는 방식으로 수행합니다. 이후 교합면(bite plane) 보정을 통해 센서 좌표를 교합면 기준으로 회전시킵니다. 교합면 정보는 각 화자에 대해 본 녹음 이전에 별도로 기록합니다. 데이터베이스에서 제공되는 .mat 파일에는 머리 보정과 교합면 보정이 모두 적용된 센서 궤적이 포함됩니다.</p>
+        
+        <p style="padding-left: 34px;">음향 신호와 조음 신호는 동일한 시스템에서 동시에 기록합니다.</p>
 
         <h3 id="s5-3">5.3. Sampling rate 및 비트 깊이</h3>
-        <p>추후 업데이트 예정.</p>
+        <p>음향 녹음은 48,000 Hz, 16-bit 해상도로 샘플링하며 WAV 형식으로 저장합니다.<br>
+           조음 데이터는 1,250 Hz로 샘플링하며 MATLAB(.mat) 형식으로 저장합니다.</p>
 
       <h2 id="s6" class="animate-on-scroll slide-in-left">6. 접근 및 이용</h2>
 
@@ -170,7 +316,7 @@
     </section>
   </div>
 
-  <div class="last-updated">마지막 업데이트: 2026년 3월 9일</div>
+  <div class="last-updated">마지막 업데이트: 2026년 3월 30일</div>
 
   <a href="#top" class="back-to-top">▲ 위로</a>
 

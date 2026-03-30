@@ -343,7 +343,7 @@ th {
   background: var(--navy);
   color: white;
   padding: 11px 16px;
-  text-align: left;
+  text-align: center;
   font-weight: 600;
   font-size: 13px;
 }

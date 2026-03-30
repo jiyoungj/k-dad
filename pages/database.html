@@ -109,70 +109,110 @@
         This section provides information about the speakers included in the dataset, including age ranges, gender distribution, and language background.
       </p>
 
-      <table>
-  <thead>
-    <tr>
-      <th rowspan="2"></th>
-      <th colspan="2">서울·경기</th>
-      <th colspan="2">경북</th>
-      <th colspan="2">전남</th>
-      <th colspan="2">충남</th>
-      <th colspan="2">강원</th>
-    </tr>
-    <tr>
-      <th>남</th><th>여</th>
-      <th>남</th><th>여</th>
-      <th>남</th><th>여</th>
-      <th>남</th><th>여</th>
-      <th>남</th><th>여</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>20대</td>
-      <td>22</td><td>23</td>
-      <td>18</td><td>23</td>
-      <td>18</td><td>21</td>
-      <td>5</td><td>4</td>
-      <td>1</td><td>4</td>
-    </tr>
-    <tr>
-      <td>30대</td>
-      <td>8</td><td>5</td>
-      <td>-</td><td>-</td>
-      <td>-</td><td>-</td>
-      <td>-</td><td>-</td>
-      <td>-</td><td>-</td>
-    </tr>
-    <tr>
-      <td>40대</td>
-      <td>-</td><td>6</td>
-      <td>-</td><td>-</td>
-      <td>-</td><td>-</td>
-      <td>-</td><td>-</td>
-      <td>-</td><td>1</td>
-    </tr>
-    <tr>
-      <td>50대</td>
-      <td>1</td><td>15</td>
-      <td>1</td><td>6</td>
-      <td>-</td><td>2</td>
-      <td>-</td><td>-</td>
-      <td>-</td><td>4</td>
-    </tr>
-    <tr>
-      <td><strong>합계</strong></td>
-      <td><strong>31</strong></td><td><strong>49</strong></td>
-      <td><strong>19</strong></td><td><strong>29</strong></td>
-      <td><strong>18</strong></td><td><strong>23</strong></td>
-      <td><strong>5</strong></td><td><strong>4</strong></td>
-      <td><strong>1</strong></td><td><strong>9</strong></td>
-    </tr>
-    <tr>
-      <td colspan="13" style="text-align: center;">DB 수집 현황 = n명</td>
-    </tr>
-  </tbody>
-</table>
+      <table id="speaker-table" style="text-align: center;">
+        <thead>
+          <tr>
+            <th rowspan="2"></th>
+            <th colspan="2">Seoul</th>
+            <th colspan="2">Gyeongsang</th>
+            <th colspan="2">S. Jeonnam</th>
+            <th colspan="2">S. Chungcheong</th>
+            <th colspan="2">Gangwon</th>
+            <th colspan="2">Others</th>
+          </tr>
+          <tr>
+            <th>M</th><th>F</th>
+            <th>M</th><th>F</th>
+            <th>M</th><th>F</th>
+            <th>M</th><th>F</th>
+            <th>M</th><th>F</th>
+            <th>M</th><th>F</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>20s</td>
+            <td>22</td><td>23</td>
+            <td>28</td><td>35</td>
+            <td>18</td><td>21</td>
+            <td>5</td><td>4</td>
+            <td>1</td><td>4</td>
+            <td>2</td><td>1</td>
+          </tr>
+          <tr>
+            <td>30s</td>
+            <td>8</td><td>5</td>
+            <td>-</td><td>-</td>
+            <td>-</td><td>-</td>
+            <td>-</td><td>-</td>
+            <td>-</td><td>-</td>
+            <td>-</td><td>-</td>
+          </tr>
+          <tr>
+            <td>40s</td>
+            <td>-</td><td>6</td>
+            <td>-</td><td>-</td>
+            <td>-</td><td>-</td>
+            <td>-</td><td>-</td>
+            <td>-</td><td>1</td>
+            <td>-</td><td>1</td>
+          </tr>
+          <tr>
+            <td>50s</td>
+            <td>1</td><td>16</td>
+            <td>3</td><td>10</td>
+            <td>-</td><td>2</td>
+            <td>-</td><td>-</td>
+            <td>-</td><td>4</td>
+            <td>1</td><td>-</td>
+          </tr>
+          <tr>
+            <td>60s</td>
+            <td>-</td><td>1</td>
+            <td>-</td><td>2</td>
+            <td>-</td><td>-</td>
+            <td>-</td><td>-</td>
+            <td>-</td><td>-</td>
+            <td>-</td><td>-</td>
+          </tr>
+          <tr id="total-row" style="text-align: center;">
+            <td><strong>Total</strong></td>
+          </tr>
+          <tr id="caption-row">
+            <td colspan="13" style="text-align: center;" id="grand-total-caption"></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <script>
+        (function() {
+          const table = document.getElementById('speaker-table');
+          const dataRows = table.querySelectorAll('tbody tr:not(#total-row):not(#caption-row)');
+          const numCols = 6;
+          const colTotals = Array(numCols).fill(0);
+
+          dataRows.forEach(row => {
+            const cells = row.querySelectorAll('td');
+            for (let i = 0; i < numCols; i++) {
+              const m = parseInt(cells[i * 2 + 1].textContent.trim()) || 0;
+              const f = parseInt(cells[i * 2 + 2].textContent.trim()) || 0;
+              colTotals[i] += m + f;
+            }
+          });
+
+          const totalRow = document.getElementById('total-row');
+          colTotals.forEach(sum => {
+            const td = document.createElement('td');
+            td.setAttribute('colspan', '2');
+            td.innerHTML = `<strong>${sum}</strong>`;
+            totalRow.appendChild(td);
+          });
+
+          const grandTotal = colTotals.reduce((a, b) => a + b, 0);
+          document.getElementById('grand-total-caption').textContent =
+            `DB collection status = ${grandTotal} speakers`;
+        })();
+      </script>
 
       <h2 id="s5" class="animate-on-scroll slide-in-left">5. Technical specifications</h2>
       <p>
@@ -219,11 +259,9 @@
           </ol>
 
         <h3 id="s5-2">5.2. Data processing details</h3>
-        <p>Articulatory data were recorded using the Carstens AG501 Electromagnetic Articulography (EMA) system. Sensors were attached to the following articulators: tongue tip, tongue body, tongue dorsum, upper lip, lower lip, and lower gum. Additionally, sensors were placed on the nasion and upper gum as fixed reference points for head movement correction.</p>
+        <p>Recordings were made as continuous sweeps of complete text passages and complete syllable sets. Each sweep was subsequently segmented into individual files at the sentence level for passage recordings and at the individual syllable level for syllable recordings. Following segmentation, TextGrid annotation files were created for each recording through hand-labeling in Praat, providing sentence-level transcriptions in both Hangul and Google Korean Romanization, as well as word-level segmentation.</p>
         
-        <p style="padding-left: 34px;">Recordings were made as continuous sweeps of complete text passages and complete syllable sets. Each sweep was subsequently segmented into individual files at the sentence level for passage recordings and at the individual syllable level for syllable recordings. Following segmentation, TextGrid annotation files were created for each recording through hand-labeling in Praat, providing sentence-level transcriptions in both Hangul and Google Korean Romanization, as well as word-level segmentation.</p>
-        
-        <p style="padding-left: 34px;">Raw sensor position data were processed in MView. Head movement correction was performed using the nasion and upper incisor/gum reference sensors to remove the effects of head movement during recording. Following head correction, sensor coordinates were rotated into the occlusal plane via bite plane correction, which was recorded from each speaker prior to the main recording session. The .mat files distributed with the database contain the fully head-corrected and bite-plane-corrected sensor trajectories.</p>
+        <p style="padding-left: 34px;">Raw sensor position data were processed in MATLAB using a script developed by Mark Tiede (Haskins Laboratories). Head movement correction was performed using the nasion and upper incisor/gum reference sensors to remove the effects of head movement during recording. Following head correction, sensor coordinates were rotated into the occlusal plane via bite plane correction, which was recorded from each speaker prior to the main recording session. The .mat files distributed with the database contain the fully head-corrected and bite-plane-corrected sensor trajectories.</p>
         
         <p style="padding-left: 34px;">Acoustic and articulatory signals were recorded simultaneously on a single system.</p>
 
@@ -278,7 +316,7 @@
     </section>
   </div>
 
-  <div class="last-updated">Last updated: March 9, 2026</div>
+  <div class="last-updated">Last updated: March 30, 2026</div>
 
   <a href="#top" class="back-to-top">▲ Top</a>
 
