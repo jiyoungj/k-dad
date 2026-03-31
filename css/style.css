@@ -264,7 +264,7 @@ h3 {
 }
 
 h3 + p {
-  margin-left: 34px;
+  margin-left: 18px;
 }
 
 p {
@@ -316,6 +316,54 @@ p {
 
 .btn-copy:hover { background: var(--navy-hover); }
 .btn-copy.copied { background: #2E7D32; }
+
+/* Collapsible cards */
+.collapsible-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin: 8px 0;
+  overflow: hidden;
+}
+
+.collapsible-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 18px;
+  background: var(--white);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14.5px;
+  color: var(--navy);
+  user-select: none;
+  transition: background 0.15s;
+}
+
+.collapsible-header:hover {
+  background: var(--accent-light);
+}
+
+.collapsible-arrow {
+  font-size: 11px;
+  transition: transform 0.2s;
+  color: var(--text-muted);
+}
+
+.collapsible-card.open .collapsible-arrow {
+  transform: rotate(180deg);
+}
+
+.collapsible-body {
+  display: none;
+  padding: 14px 18px;
+  font-size: 14.5px;
+  border-top: 1px solid var(--border);
+  background: var(--white);
+}
+
+.collapsible-card.open .collapsible-body {
+  display: block;
+}
 
 /* === Info Box === */
 .info-box {
